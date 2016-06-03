@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "897645525343",
+    "firebase_url": "https://project-9131667128130465393.firebaseio.com",
+    "project_id": "project-9131667128130465393",
+    "storage_bucket": "project-9131667128130465393.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:897645525343:android:d7af4f159374c187",
+        "android_client_info": {
+          "package_name": "com.daveholman.geartracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "897645525343-421u92pb181mk9ljeug1vr6m0p8alhvi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.daveholman.geartracker",
+            "certificate_hash": "E43A7EAAB7BDC20FA253FA6F427CA2BABAC76D7B"
+          }
+        },
+        {
+          "client_id": "897645525343-q72qvf5ul0cma4bj9trh6i6i4bmjf0n9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCb0dsVhJRiY9FiGF6ZpsLwbmiqIIksqlE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "897645525343-q72qvf5ul0cma4bj9trh6i6i4bmjf0n9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
