@@ -20,9 +20,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import com.daveholman.geartracker.data.UserGearData;
 import com.daveholman.geartracker.dummy.DummyContent;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -46,6 +55,7 @@ public class ItemListActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,10 +92,29 @@ public class ItemListActivity extends AppCompatActivity {
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
+                mUser = firebaseAuth.getCurrentUser();
+                if (mUser != null) {
                     // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + mUser.getUid());
+
+                    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef = database.getReference("test2");
+
+                    myRef.addValueEventListener(new ValueEventListener()
+                    {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot)
+                        {
+                            UserGearData userGearData = dataSnapshot.getValue(UserGearData.class);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Log.d(TAG, "addValueEventListener:databaseError" + database.toString());
+                        }
+                    });
+
+
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
