@@ -9,6 +9,11 @@ public class GearData
     private int year;
     private String imageUrl;
 
+    public GearData() {
+        // empty default constructor, necessary for Firebase to be able to deserialize
+    }
+
+
     public String getItemId() {
         return itemId;
     }

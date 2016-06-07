@@ -108,4 +108,5 @@
     <string name="action_signout">Sign out</string>
     <string name="title_item_list">Items</string>
     <string name="title_item_detail">Item Detail</string>
+    <string name="title_activity_add_edit">AddEditActivity</string>
 </resources>

@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import com.daveholman.geartracker.data.GearData;
 import com.daveholman.geartracker.data.UserGearData;
 import com.daveholman.geartracker.dummy.DummyContent;
 import com.google.firebase.FirebaseApp;
@@ -33,6 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,6 +59,8 @@ public class ItemListActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser mUser;
 
+    private UserGearData mUserGearData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,12 +76,14 @@ public class ItemListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                startActivity(new Intent(getApplicationContext(), AddEditActivity.class));
+                finish();
             }
         });
 
-        View recyclerView = findViewById(R.id.item_list);
+        final View recyclerView = findViewById(R.id.item_list);
         assert recyclerView != null;
-        setupRecyclerView((RecyclerView) recyclerView);
+
 
         if (findViewById(R.id.item_detail_container) != null) {
             // The detail container view will be present only in the
@@ -98,14 +104,15 @@ public class ItemListActivity extends AppCompatActivity {
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + mUser.getUid());
 
                     final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference myRef = database.getReference("test2");
+                    DatabaseReference myRef = database.getReference("gear/" + mUser.getUid());
 
                     myRef.addValueEventListener(new ValueEventListener()
                     {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot)
                         {
-                            UserGearData userGearData = dataSnapshot.getValue(UserGearData.class);
+                            mUserGearData = dataSnapshot.getValue(UserGearData.class);
+                            setupRecyclerView((RecyclerView) recyclerView, mUserGearData);
                         }
 
                         @Override
@@ -165,16 +172,16 @@ public class ItemListActivity extends AppCompatActivity {
         mAuth.signOut();
     }
 
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(DummyContent.ITEMS));
+    private void setupRecyclerView(@NonNull RecyclerView recyclerView, UserGearData userGearData) {
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(userGearData.getGearDataList()));
     }
 
     public class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
-        private final List<DummyContent.DummyItem> mValues;
+        private final ArrayList<GearData> mValues;
 
-        public SimpleItemRecyclerViewAdapter(List<DummyContent.DummyItem> items) {
+        public SimpleItemRecyclerViewAdapter(ArrayList<GearData> items) {
             mValues = items;
         }
 
@@ -188,15 +195,15 @@ public class ItemListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
-            holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).content);
+            holder.mIdView.setText(mValues.get(position).getManufacturer());
+            holder.mContentView.setText(mValues.get(position).getName());
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mTwoPane) {
                         Bundle arguments = new Bundle();
-                        arguments.putString(ItemDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+                        arguments.putString(ItemDetailFragment.ARG_ITEM_ID, holder.mItem.getName());
                         ItemDetailFragment fragment = new ItemDetailFragment();
                         fragment.setArguments(arguments);
                         getSupportFragmentManager().beginTransaction()
@@ -205,7 +212,7 @@ public class ItemListActivity extends AppCompatActivity {
                     } else {
                         Context context = v.getContext();
                         Intent intent = new Intent(context, ItemDetailActivity.class);
-                        intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+                        intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, holder.mItem.getName());
 
                         context.startActivity(intent);
                     }
@@ -222,7 +229,7 @@ public class ItemListActivity extends AppCompatActivity {
             public final View mView;
             public final TextView mIdView;
             public final TextView mContentView;
-            public DummyContent.DummyItem mItem;
+            public GearData mItem;
 
             public ViewHolder(View view) {
                 super(view);
