@@ -23,6 +23,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 /**
  * A fragment representing a single Item detail screen.
  * This fragment is either contained in a {@link ItemListActivity}
@@ -74,14 +76,16 @@ public class ItemDetailFragment extends Fragment {
 
             final FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("gear/" + mUser.getUid());
-            Query queryRef = myRef.child("gearDataList").equalTo("name", itemKey);
+            Query queryRef = myRef.child("gearDataList").orderByChild("name").equalTo(itemKey);
 
             queryRef.addListenerForSingleValueEvent(new ValueEventListener()
             {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot)
                 {
-                    mGearData = dataSnapshot.getValue(GearData.class);
+                    //GearData gearData = (GearData) dataSnapshot.getValue(GearData.class);
+                    mGearData = dataSnapshot.getChildren().iterator().next().getValue(GearData.class);
+
                     CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
                     if (appBarLayout != null) {
                         appBarLayout.setTitle(mGearData.getName());
@@ -102,7 +106,7 @@ public class ItemDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.item_detail, container, false);
 
         // Show the dummy content as text in a TextView.
-        if (mGearData != null) {
+        if (mGearData != null ) {
             ((TextView) rootView.findViewById(R.id.item_detail)).setText(mGearData.getDescription());
         }
 
