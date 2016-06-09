@@ -1,25 +1,37 @@
-package com.daveholman.geartracker.data;
+package com.daveholman.geartracker.models;
+
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class GearData
 {
-    private String itemId;
+    public String uid;
     private String name;
     private String manufacturer;
     private String description;
     private int year;
     private String imageUrl;
+    public int starCount = 0;
+    public Map<String, Boolean> stars = new HashMap<>();
 
     public GearData() {
         // empty default constructor, necessary for Firebase to be able to deserialize
     }
 
-
-    public String getItemId() {
-        return itemId;
+    public GearData(String uid, String name, String manufacturer) {
+        this.uid = uid;
+        this.name = name;
+        this.manufacturer = manufacturer;
     }
 
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUId(String uid) {
+        this.uid = uid;
     }
 
     public String getName() {
@@ -61,4 +73,20 @@ public class GearData
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    // [START post_to_map]
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("uid", uid);
+        result.put("name", name);
+        result.put("manufacturer", manufacturer);
+        result.put("description", description);
+        result.put("starCount", starCount);
+        result.put("stars", stars);
+        result.put("imageurl", imageUrl);
+
+        return result;
+    }
+    // [END post_to_map]
 }

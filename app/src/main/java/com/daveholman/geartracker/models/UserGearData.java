@@ -1,7 +1,6 @@
-package com.daveholman.geartracker.data;
+package com.daveholman.geartracker.models;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by dholman on 6/6/16.
