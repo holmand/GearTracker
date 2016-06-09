@@ -17,7 +17,7 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme" />
-        <activity android:name=".NewGearActivity" />
+        <activity android:name=".GearFormActivity" />
         <activity android:name=".SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +26,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".GearDetailActivity" />
+        <activity
+            android:name=".GearViewActivity"
+            android:label="@string/title_activity_gear_view"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

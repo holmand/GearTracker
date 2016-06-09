@@ -75,11 +75,11 @@ public class  MainActivity extends BaseActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        // Button launches NewPostActivity
+        // Button launches GearFormActivity
         findViewById(R.id.fab_new_gear).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, NewGearActivity.class));
+                startActivity(new Intent(MainActivity.this, GearFormActivity.class));
             }
         });
     }

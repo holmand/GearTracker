@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.daveholman.geartracker.GearViewActivity;
 import com.daveholman.geartracker.R;
 import com.daveholman.geartracker.GearDetailActivity;
 import com.daveholman.geartracker.models.GearData;
@@ -73,8 +74,8 @@ public abstract class GearListFragment extends Fragment {
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // Launch PostDetailActivity
-                        Intent intent = new Intent(getActivity(), GearDetailActivity.class);
+                        // Launch GearViewActivity
+                        Intent intent = new Intent(getActivity(), GearViewActivity.class);
                         intent.putExtra(GearDetailActivity.EXTRA_GEAR_KEY, gearKey);
                         startActivity(intent);
                     }

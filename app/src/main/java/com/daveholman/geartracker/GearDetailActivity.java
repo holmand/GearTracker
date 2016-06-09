@@ -60,13 +60,13 @@ public class GearDetailActivity extends BaseActivity implements View.OnClickList
 
         // Initialize Database
         mGearReference = FirebaseDatabase.getInstance().getReference()
-                .child("gearDataList").child(mGearKey);
+                .child("gear").child(mGearKey);
         mCommentsReference = FirebaseDatabase.getInstance().getReference()
                 .child("gear-comments").child(mGearKey);
 
         // Initialize Views
         mManufacturerView = (TextView) findViewById(R.id.gear_manufacturer);
-        mNameView = (TextView) findViewById(R.id.gear_name);
+        mNameView = (TextView) findViewById(R.id.gear_title);
         mDescriptionView = (TextView) findViewById(R.id.gear_description);
         mCommentField = (EditText) findViewById(R.id.field_comment_text);
         mCommentButton = (Button) findViewById(R.id.button_post_comment);
@@ -90,7 +90,7 @@ public class GearDetailActivity extends BaseActivity implements View.OnClickList
                 GearData gearData = dataSnapshot.getValue(GearData.class);
                 // [START_EXCLUDE]
                 mManufacturerView.setText(gearData.getManufacturer());
-                mNameView.setText(gearData.getName());
+                mNameView.setText(gearData.getTitle());
                 mDescriptionView.setText(gearData.getDescription());
                 // [END_EXCLUDE]
             }

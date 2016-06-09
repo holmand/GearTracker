@@ -8,7 +8,7 @@ import java.util.Map;
 public class GearData
 {
     public String uid;
-    private String name;
+    private String title;
     private String manufacturer;
     private String description;
     private int year;
@@ -20,10 +20,11 @@ public class GearData
         // empty default constructor, necessary for Firebase to be able to deserialize
     }
 
-    public GearData(String uid, String name, String manufacturer) {
+    public GearData(String uid, String title, String manufacturer, int year) {
         this.uid = uid;
-        this.name = name;
+        this.title = title;
         this.manufacturer = manufacturer;
+        this.year = year;
     }
 
     public String getUid() {
@@ -34,12 +35,12 @@ public class GearData
         this.uid = uid;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getManufacturer() {
@@ -79,7 +80,7 @@ public class GearData
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("uid", uid);
-        result.put("name", name);
+        result.put("title", title);
         result.put("manufacturer", manufacturer);
         result.put("description", description);
         result.put("starCount", starCount);

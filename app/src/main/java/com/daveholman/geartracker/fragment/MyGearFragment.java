@@ -11,7 +11,7 @@ public class MyGearFragment extends GearListFragment {
     @Override
     public Query getQuery(DatabaseReference databaseReference) {
         // All my posts
-        return databaseReference.child("user-posts")
+        return databaseReference.child("user-gear")
                 .child(getUid());
     }
 }

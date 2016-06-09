@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.daveholman.geartracker.models.GearData;
 import com.daveholman.geartracker.models.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,41 +19,48 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NewGearActivity extends BaseActivity {
+public class GearFormActivity extends BaseActivity {
 
-    private static final String TAG = "NewGearActivity";
+    private static final String TAG = "GearFormActivity";
     private static final String REQUIRED = "Required";
+    private static final String INVALID = "Required";
 
     // [START declare_database_ref]
     private DatabaseReference mDatabase;
     // [END declare_database_ref]
 
     private EditText mTitleField;
-    private EditText mBodyField;
+    private EditText mManufacturerField;
+    private EditText mYearField;
+    private EditText mNotesField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_gear);
+        setContentView(R.layout.activity_gear_form);
 
         // [START initialize_database_ref]
         mDatabase = FirebaseDatabase.getInstance().getReference();
         // [END initialize_database_ref]
 
         mTitleField = (EditText) findViewById(R.id.field_title);
-        mBodyField = (EditText) findViewById(R.id.field_body);
+        mNotesField = (EditText) findViewById(R.id.field_notes);
+        mManufacturerField = (EditText) findViewById(R.id.field_manufacturer);
+        mYearField = (EditText) findViewById(R.id.field_year);
 
-        findViewById(R.id.fab_submit_post).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.fab_submit_gear).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                submitPost();
+                submitGear();
             }
         });
     }
 
-    private void submitPost() {
+    private void submitGear() {
         final String title = mTitleField.getText().toString();
-        final String body = mBodyField.getText().toString();
+        final String notes = mNotesField.getText().toString();
+        final String manufacturer = mManufacturerField.getText().toString();
+        final int year;
 
         // Title is required
         if (TextUtils.isEmpty(title)) {
@@ -60,9 +68,26 @@ public class NewGearActivity extends BaseActivity {
             return;
         }
 
-        // Body is required
-        if (TextUtils.isEmpty(body)) {
-            mBodyField.setError(REQUIRED);
+        // Notes is required
+        if (TextUtils.isEmpty(notes)) {
+            mNotesField.setError(REQUIRED);
+            return;
+        }
+
+        // Manufacturer is required
+        if (TextUtils.isEmpty(manufacturer)) {
+            mManufacturerField.setError(REQUIRED);
+            return;
+        }
+
+        int parsedYear = 0;
+
+        try {
+            parsedYear = Integer.parseInt(mYearField.getText().toString());
+            year = parsedYear;
+        } catch(NumberFormatException nfe) {
+            System.out.println("Could not parse " + nfe);
+            mYearField.setError(INVALID);
             return;
         }
 
@@ -79,12 +104,12 @@ public class NewGearActivity extends BaseActivity {
                         if (user == null) {
                             // User is null, error out
                             Log.e(TAG, "User " + userId + " is unexpectedly null");
-                            Toast.makeText(NewGearActivity.this,
+                            Toast.makeText(GearFormActivity.this,
                                     "Error: could not fetch user.",
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             // Write new post
-                            writeNewPost(userId, user.username, title, body);
+                            writeNewPost(userId, user.username, title, notes, manufacturer, year);
                         }
 
                         // Finish this Activity, back to the stream
@@ -101,20 +126,20 @@ public class NewGearActivity extends BaseActivity {
     }
 
     // [START write_fan_out]
-    private void writeNewPost(String userId, String username, String title, String body) {
+    private void writeNewPost(String userId, String username, String title, String notes, String manufacturer, int year) {
         // Create new post at /user-posts/$userid/$postid and at
         // /posts/$postid simultaneously
-       /*
-       String key = mDatabase.child("posts").push().getKey();
-        Post post = new Post(userId, username, title, body);
-        Map<String, Object> postValues = post.toMap();
+
+       String key = mDatabase.child("gear").push().getKey();
+        GearData gearData = new GearData(userId, title, manufacturer, year );
+        Map<String, Object> gearValues = gearData.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/posts/" + key, postValues);
-        childUpdates.put("/user-posts/" + userId + "/" + key, postValues);
+        childUpdates.put("/gear/" + key, gearValues);
+        childUpdates.put("/user-gear/" + userId + "/" + key, gearValues);
 
         mDatabase.updateChildren(childUpdates);
-        */
+
     }
     // [END write_fan_out]
 }

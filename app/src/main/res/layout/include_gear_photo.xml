@@ -13,7 +13,7 @@
         android:src="@drawable/places_ic_search" />
 
     <TextView
-        android:id="@+id/gear_name"
+        android:id="@+id/gear_title"
         style="@style/Base.TextAppearance.AppCompat.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
