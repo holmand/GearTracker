@@ -6,6 +6,11 @@
     android:orientation="vertical"
     tools:context=".GearFormActivity">
 
+    <ImageView
+        android:id="@+id/image_gear"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+
     <EditText
         android:id="@+id/field_title"
         android:layout_width="match_parent"
@@ -56,6 +61,15 @@
         android:inputType="textMultiLine"
         android:maxLines="10"
         android:scrollHorizontally="false" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_camera_gear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_camera_enhance_white_24dp"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_submit_gear"

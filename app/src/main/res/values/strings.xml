@@ -26,6 +26,9 @@
     <string name="title_activity_add_edit">AddEditActivity</string>
     <string name="title_activity_sign_in">SignInActivity</string>
 
+    <string name="storage_permission">This app allows you to upload images.</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_gear_view">GearViewActivity</string>
