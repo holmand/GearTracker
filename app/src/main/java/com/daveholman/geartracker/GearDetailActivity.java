@@ -42,7 +42,7 @@ public class GearDetailActivity extends BaseActivity implements View.OnClickList
 
     private TextView mManufacturerView;
     private TextView mNameView;
-    private TextView mDescriptionView;
+    private TextView mNotesView;
     private EditText mCommentField;
     private Button mCommentButton;
     private RecyclerView mCommentsRecycler;
@@ -67,7 +67,7 @@ public class GearDetailActivity extends BaseActivity implements View.OnClickList
         // Initialize Views
         mManufacturerView = (TextView) findViewById(R.id.gear_manufacturer);
         mNameView = (TextView) findViewById(R.id.gear_title);
-        mDescriptionView = (TextView) findViewById(R.id.gear_description);
+        mNotesView = (TextView) findViewById(R.id.gear_notes);
         mCommentField = (EditText) findViewById(R.id.field_comment_text);
         mCommentButton = (Button) findViewById(R.id.button_post_comment);
         mCommentsRecycler = (RecyclerView) findViewById(R.id.recycler_comments);
@@ -91,7 +91,7 @@ public class GearDetailActivity extends BaseActivity implements View.OnClickList
                 // [START_EXCLUDE]
                 mManufacturerView.setText(gearData.getManufacturer());
                 mNameView.setText(gearData.getTitle());
-                mDescriptionView.setText(gearData.getDescription());
+                mNotesView.setText(gearData.getNotes());
                 // [END_EXCLUDE]
             }
 

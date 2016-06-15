@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".NewGearActivity">
+    tools:context=".GearFormActivity">
 
     <EditText
         android:id="@+id/field_title"
@@ -15,6 +15,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:hint="Title"
+        android:inputType="textCapSentences"
         android:maxLines="1" />
 
     <EditText
@@ -26,6 +27,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:hint="Manufacturer"
+        android:inputType="textCapSentences"
         android:maxLines="1" />
 
     <EditText
@@ -37,6 +39,8 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:hint="Year"
+        android:inputType="number"
+        android:maxLength="4"
         android:maxLines="1" />
 
     <EditText

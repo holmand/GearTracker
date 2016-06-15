@@ -16,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +24,7 @@ public class GearFormActivity extends BaseActivity {
 
     private static final String TAG = "GearFormActivity";
     private static final String REQUIRED = "Required";
-    private static final String INVALID = "Required";
+    private static final String INVALID = "Invalid";
 
     // [START declare_database_ref]
     private DatabaseReference mDatabase;
@@ -84,7 +85,17 @@ public class GearFormActivity extends BaseActivity {
 
         try {
             parsedYear = Integer.parseInt(mYearField.getText().toString());
+            Calendar calendar = Calendar.getInstance();
+            int currentYear = calendar.get(Calendar.YEAR);
+
+            if(parsedYear > currentYear +1)
+            {
+                mYearField.setError(INVALID);
+                return;
+            }
+
             year = parsedYear;
+
         } catch(NumberFormatException nfe) {
             System.out.println("Could not parse " + nfe);
             mYearField.setError(INVALID);
@@ -109,7 +120,7 @@ public class GearFormActivity extends BaseActivity {
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             // Write new post
-                            writeNewPost(userId, user.username, title, notes, manufacturer, year);
+                            writeNewPost(userId, user.username, title, notes, manufacturer, year, "", 0);
                         }
 
                         // Finish this Activity, back to the stream
@@ -126,12 +137,12 @@ public class GearFormActivity extends BaseActivity {
     }
 
     // [START write_fan_out]
-    private void writeNewPost(String userId, String username, String title, String notes, String manufacturer, int year) {
+    private void writeNewPost(String userId, String username, String title, String notes, String manufacturer, int year, String imageUrl, int starCount) {
         // Create new post at /user-posts/$userid/$postid and at
         // /posts/$postid simultaneously
 
        String key = mDatabase.child("gear").push().getKey();
-        GearData gearData = new GearData(userId, title, manufacturer, year );
+        GearData gearData = new GearData(userId, title, manufacturer, year, notes, imageUrl, starCount );
         Map<String, Object> gearValues = gearData.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();

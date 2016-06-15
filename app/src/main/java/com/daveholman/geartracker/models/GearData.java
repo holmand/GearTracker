@@ -10,7 +10,7 @@ public class GearData
     public String uid;
     private String title;
     private String manufacturer;
-    private String description;
+    private String notes;
     private int year;
     private String imageUrl;
     public int starCount = 0;
@@ -20,11 +20,14 @@ public class GearData
         // empty default constructor, necessary for Firebase to be able to deserialize
     }
 
-    public GearData(String uid, String title, String manufacturer, int year) {
+    public GearData(String uid, String title, String manufacturer, int year, String notes, String imageUrl, int starCount) {
         this.uid = uid;
         this.title = title;
         this.manufacturer = manufacturer;
         this.year = year;
+        this.notes = notes;
+        this.imageUrl = imageUrl;
+        this.starCount = starCount;
     }
 
     public String getUid() {
@@ -51,12 +54,12 @@ public class GearData
         this.manufacturer = manufacturer;
     }
 
-    public String getDescription() {
-        return description;
+    public String getNotes() {
+        return notes;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public int getYear() {
@@ -82,7 +85,7 @@ public class GearData
         result.put("uid", uid);
         result.put("title", title);
         result.put("manufacturer", manufacturer);
-        result.put("description", description);
+        result.put("notes", notes);
         result.put("starCount", starCount);
         result.put("stars", stars);
         result.put("imageurl", imageUrl);

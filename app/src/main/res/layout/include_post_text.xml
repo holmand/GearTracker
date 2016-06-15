@@ -16,10 +16,10 @@
         tools:text="My First Post" />
 
     <TextView
-        android:id="@+id/gear_description"
+        android:id="@+id/gear_notes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        tools:text="Gear Description" />
+        tools:text="Gear Notes" />
 
 </LinearLayout>
