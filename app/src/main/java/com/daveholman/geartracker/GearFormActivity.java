@@ -273,6 +273,7 @@ public class GearFormActivity extends BaseActivity implements EasyPermissions.Pe
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         // Upload succeeded
                         Log.d(TAG, "uploadFromUri:onSuccess");
+                        
 
                         // Get the public download URL
                         mDownloadUrl = taskSnapshot.getMetadata().getDownloadUrl();
